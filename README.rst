@@ -22,7 +22,7 @@ EC2 AMI Image
   >               --aws-access-key-id=AKIXXXXXXXXXXXXXXXX \
   >               --aws-secret-access-key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
   >               --aws-region=ap-northeast-1 \
-  >               --aws-hours-diff='9hours' \
+  >               --aws-timedelta='9hours' \
   >               --client-timedelta='9hours' \
   >               --client-timefmt='%Y-%m-%dT%H-%M-%S' \
   >               --log-level=10 \
