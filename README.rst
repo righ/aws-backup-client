@@ -15,9 +15,9 @@ EC2 AMI Image
 
 .. code-block:: sh
 
-  $ ec2ami-backup --instance_id=i-xxxxxxxx --instance_id=i-yyyyyyyy \
-  >               --instance_name=name1* --instance_name=*name2\
-  >               --instance_tag=key/value* --instance_tag=key2/*value2 \
+  $ ec2ami-backup --instance-id=i-xxxxxxxx --instance-id=i-yyyyyyyy \
+  >               --instance-name=name1 --instance-name=*name2*\
+  >               --instance-tag=key/value --instance-tag=key2/*value2* \
   >               --image-description='weekly backup image' \
   >               --image-max-number=2 \
   >               --image-expiration='14days' \
