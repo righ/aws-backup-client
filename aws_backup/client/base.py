@@ -36,7 +36,6 @@ class BaseClient(object):
             self.preloaded = __import__(self.options.preload)
 
         logger.debug('* options: %s', options)
-        
 
     @property
     def now(self):

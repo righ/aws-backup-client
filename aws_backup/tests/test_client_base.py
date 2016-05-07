@@ -15,6 +15,11 @@ class TestBaseClient(TestCase):
         from ..parser import parser
         return parser.parse_args(args)
 
+    def test_preload(self):
+        cli = self._makeOne('--preload', 'sys')
+        import sys
+        self.assertEqual(cli.preloaded, sys)
+
     @mock.patch('aws_backup.client.base.datetime')
     def test_now(self, dummy_datetime):
         dummy_datetime.now.return_value = datetime(1988, 5, 22)

@@ -21,6 +21,7 @@ class TestEc2Client(TestCase):
             instance_id=['id1', 'id2'],
             instance_name=['name1', 'name2', 'name3'],
             instance_tag=['k1/v1', 'k2/v2'],
+            preload=None,
         )
         cli.instances
         dummy_boto.resource.assert_called_with(
@@ -52,7 +53,8 @@ class TestEc2Client(TestCase):
             dry_run=True,
             prefix='daily-',
             client_time_format='%Y%m%d',
-            client_time_diff=None
+            client_time_diff=None,
+            preload=None,
         )
         instance = mock.MagicMock(
             tags=[{'Key': 'Name', 'Value': 'testname'}], id='testid')
@@ -61,7 +63,7 @@ class TestEc2Client(TestCase):
             Name='daily-testid-19880522',
             Description='test description',
             NoReboot=False,
-            DryRun=True
+            DryRun=True,
         )
         instance.create_image().create_tags.assert_called_with(
             Tags=[{'Key': 'Name', 'Value': 'testname'}],
@@ -73,7 +75,8 @@ class TestEc2Client(TestCase):
         cli = self._makeOne(
             log_level=10,
             image_max_number=None,
-            image_expiration=None
+            image_expiration=None,
+            preload=None,
         )
         instance = mock.MagicMock(id='testid')
         cli.delete_images(instance)
@@ -90,7 +93,8 @@ class TestEc2Client(TestCase):
             client_time_format='%Y%m%d',
             client_time_diff=None,
             image_max_number=2,
-            image_expiration=None
+            image_expiration=None,
+            preload=None,
         )
         images = [
             mock.MagicMock(
@@ -119,7 +123,8 @@ class TestEc2Client(TestCase):
             client_time_format='%Y%m%d',
             client_time_diff=None,
             image_max_number=None,
-            image_expiration=timedelta(days=3)
+            image_expiration=timedelta(days=3),
+            preload=None,
         )
         images = [
             mock.MagicMock(
