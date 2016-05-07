@@ -79,7 +79,6 @@ class TestEc2Client(TestCase):
         cli.delete_images(instance)
         self.assertFalse(cli.resource.images.filter.called)
 
-
     @mock.patch('aws_backup.client.base.datetime')
     @mock.patch('aws_backup.client.base.boto3')
     def test_delete_image_exceeded_number(self, dummy_boto, dummy_datetime):

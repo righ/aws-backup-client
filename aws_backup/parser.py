@@ -33,3 +33,4 @@ parser.add_argument("--log-level", type=int, help="log level", default=logging.I
 parser.add_argument("--reboot", help="reboot", action="store_true")
 parser.add_argument("--dry-run", help="dry run", action="store_true")
 parser.add_argument("--prefix", help="backup name of prefix", default='')
+parser.add_argument("--preload", help="preload module path")

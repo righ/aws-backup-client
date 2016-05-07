@@ -2,7 +2,6 @@
 import boto3
 
 from .base import BaseClient
-from ..compat import timedelta
 
 
 class Ec2Client(BaseClient):

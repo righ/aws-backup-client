@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
-import sys
 import logging
 
 from ..parser import parser, TypeDelta
 from ..client.ec2 import Ec2Client
 
 
-def ami():
-    logger = logging.getLogger('ec2ami')
+def ami(*args):
+    logger = logging.getLogger('aws-backup-client.ami')
+
+    for arg in args:
+        parser.add_argument(arg)
 
     parser.add_argument("--instance-id", help="instance id", action='append')
     parser.add_argument("--instance-name", help="instance name, '*' can be used as wildcard.", action='append')

@@ -1,5 +1,4 @@
 # coding: utf-8
-import sys
 import logging
 from datetime import datetime
 
@@ -32,7 +31,12 @@ class BaseClient(object):
                 aws_secret_access_key=options.aws_secret_access_key,
                 region_name=options.aws_region
             )
+
+        if self.options.preload:
+            self.preloaded = __import__(self.options.preload)
+
         logger.debug('* options: %s', options)
+        
 
     @property
     def now(self):
