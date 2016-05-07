@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 __author__ = 'righ'
 __author_email__ = 'righ.m9@gmail.com'
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __license__ = 'Apache License 2.0'
 
 __name__ = 'aws-backup-client'
