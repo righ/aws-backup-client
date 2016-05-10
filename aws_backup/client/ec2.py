@@ -2,10 +2,17 @@
 import boto3
 
 from .base import BaseClient
+from ..exceptions import OptionDoesNotEnough
 
 
 class Ec2Client(BaseClient):
     resource_service = 'ec2'
+
+    def __init__(self, *args, **kwargs):
+        super(Ec2Client, self).__init__(*args, **kwargs)
+
+        if not (self.options.instance_id or self.options.instance_name or self.options.instance_tag):
+            raise OptionDoesNotEnough('Any of input is required: --instance-id, --instance-name, --instance-tag')
 
     @property
     def instances(self):

@@ -124,6 +124,7 @@ class TestEc2Client(TestCase):
             client_time_diff=None,
             image_max_number=None,
             image_expiration=timedelta(days=3),
+            instace_name='*',
             preload=None,
         )
         images = [
@@ -139,3 +140,15 @@ class TestEc2Client(TestCase):
         self.assertFalse(images[2].deregister.called)  # 3 + 3 = 6
         self.assertFalse(images[3].deregister.called)  # 4 + 3 > 6
         self.assertFalse(images[4].deregister.called)  # 5 + 3 > 6
+
+    @mock.patch('aws_backup.client.base.boto3')
+    def test_raise_option_does_not_enough(self, dummy_boto):
+        from ..exceptions import OptionDoesNotEnough
+        with self.assertRaises(OptionDoesNotEnough):
+            self._makeOne(
+                log_level=30,
+                preload=None,
+                instance_id=None,
+                instance_name=None,
+                instance_tag=None,
+            )

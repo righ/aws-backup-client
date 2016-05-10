@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 __author__ = 'righ'
 __author_email__ = 'righ.m9@gmail.com'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 __license__ = 'Apache License 2.0'
 
 __name__ = 'aws-backup-client'
@@ -34,7 +34,7 @@ __install_requires__ = [
 
 __entry_points__ = {
     'console_scripts': [
-        'ec2ami-backup = aws_backup.bin.ec2:ami'
+        'ec2-ami-backup = aws_backup.bin.ec2:ami'
     ],
 }
 

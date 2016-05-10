@@ -15,7 +15,7 @@ EC2 AMI Image
 
 .. code-block:: sh
 
-  $ ec2ami-backup --instance-id=i-xxxxxxxx --instance-id=i-yyyyyyyy \
+  $ ec2-ami-backup --instance-id=i-xxxxxxxx --instance-id=i-yyyyyyyy \
   >               --instance-name=name1 --instance-name=*name2*\
   >               --instance-tag=key/value --instance-tag=key2/*value2* \
   >               --image-description='weekly backup image' \
@@ -31,3 +31,18 @@ EC2 AMI Image
   >               --reboot \
   >               --prefix='weekly-' \
   >               --dry-run
+
+Following of input is required:
+
+* --instance-id
+* --instance-name
+* --instance-tag
+
+
+
+..warning:: 
+
+  * v0.0.4
+
+    * it has limited input as described above.
+    * renamed command `ec2ami-backup` to `ec2-ami-backup`.
