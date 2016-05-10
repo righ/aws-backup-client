@@ -40,7 +40,7 @@ Following of input is required:
 
 
 
-..warning:: 
+.. warning:: 
 
   * v0.0.4
 
