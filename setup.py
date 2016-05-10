@@ -29,7 +29,7 @@ __keywords__ = [
 ]
 
 __install_requires__ = [
-    'boto3',
+    'boto3>=1.0.0',
 ]
 
 __entry_points__ = {
@@ -49,7 +49,7 @@ setup(
     author_email=__author_email__,
     url=__url__,
     license=__license__,
-    install_requiers=__install_requires__,
+    install_requires=__install_requires__,
     packages=find_packages(exclude=['*.tests.*']),
     entry_points=__entry_points__,
 )
