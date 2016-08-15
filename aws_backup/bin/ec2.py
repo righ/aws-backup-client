@@ -19,6 +19,7 @@ def ami(*args):
     parser.add_argument("--image-description", help="image description", default='')
     parser.add_argument("--image-max-number", type=int, help="image max number", default=None)
     parser.add_argument("--image-expiration", type=TypeDelta(), help="image expiration", default=None)
+    parser.add_argument("--keep-snapshot", help="option that keep snapshot related to removing-target ami.", action="store_true")
 
     ec2 = Ec2Client(logger, options=parser.parse_args())
     for instance in ec2.instances:

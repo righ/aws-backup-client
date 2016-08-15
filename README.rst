@@ -31,13 +31,13 @@ EC2 AMI Image
   >               --reboot \
   >               --prefix='weekly-' \
   >               --dry-run
+  >               --keep-snapshot
 
-Following of input is required:
+Following least any one input is required:
 
 * --instance-id
 * --instance-name
 * --instance-tag
-
 
 
 .. warning:: 
@@ -46,3 +46,7 @@ Following of input is required:
 
     * it has limited input as described above.
     * renamed command `ec2ami-backup` to `ec2-ami-backup`.
+
+  * v0.0.6
+
+    * --keep-snapshot: It does not remove the snapshot that related to ami.
