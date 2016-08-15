@@ -152,3 +152,37 @@ class TestEc2Client(TestCase):
                 instance_name=None,
                 instance_tag=None,
             )
+
+    @mock.patch('aws_backup.client.base.datetime')
+    @mock.patch('aws_backup.client.base.boto3')
+    def test_delete_snapshot(self, dummy_boto, dummy_datetime):
+        dummy_datetime.now.return_value = datetime(1988, 5, 22)
+        cli = self._makeOne(
+            log_level=30,
+            dry_run=True,
+            prefix='daily-',
+            client_time_format='%Y%m%d',
+            client_time_diff=None,
+            image_max_number=1,
+            image_expiration=None,
+            preload=None,
+            keep_snapshot=False
+        )
+        images = [
+            mock.MagicMock(
+                name='image{}'.format(i),
+                creation_date='2000-01-0{}T00:00:00.000Z'.format(i),
+                block_device_mappings=[{'Ebs': {'SnapshotId': 'test'}}],
+            )
+            for i in range(1, 4)]
+
+        m = mock.MagicMock()
+        m2 = mock.MagicMock()
+        delete_snapshots = [m, m2]
+
+        cli.resource.images.filter.return_value = images
+        cli.resource.snapshots.filter.return_value = delete_snapshots
+        instance = mock.MagicMock(id='testid')
+        cli.delete_images(instance)
+        self.assertEqual(m.delete.call_count, 2)
+        self.assertEqual(m2.delete.call_count, 2)

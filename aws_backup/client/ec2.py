@@ -33,14 +33,14 @@ class Ec2Client(BaseClient):
             image = instance.create_image(
                 Name=self.generate_code(instance.id),
                 Description=self.options.image_description,
-                NoReboot=not(self.options.reboot),
+                NoReboot=not self.options.reboot,
                 DryRun=self.options.dry_run
             )
             self.logger.debug('* instance.tags: %s', instance.tags)
-            image.create_tags(DryRun=self.options.dry_run, Tags=instance.tags)
+            if instance.tags:
+                image.create_tags(DryRun=self.options.dry_run, Tags=instance.tags)
 
-            self.logger.info(
-                '* created image: %s (%s)', image.name, image.id)
+            self.logger.info('* created image: %s (%s)', image.name, image.id)
             return image
         except boto3.exceptions.botocore.exceptions.ClientError as e:
             self.logger.error(e)
@@ -56,14 +56,24 @@ class Ec2Client(BaseClient):
         ), start=1):
             self.logger.debug('* image.creation_date: %s', image.creation_date)
             cdate = self.parse_cdate(image.creation_date)
+
             if (
                 (not self.options.image_max_number or index > self.options.image_max_number) and
                 (not self.options.image_expiration or cdate + self.options.image_expiration < self.now)
             ):
                 try:
                     name = image.name
+                    snapshot_ids = [s['Ebs']['SnapshotId'] for s in image.block_device_mappings]
+                    if self.options.keep_snapshot or not snapshot_ids:
+                        delete_snapshots = []
+                    else:
+                        delete_snapshots = self.resource.snapshots.filter(SnapshotIds=snapshot_ids)
+
                     image.deregister(DryRun=self.options.dry_run)
-                    self.logger.info(
-                        '* deleted image: %s (%s)', name, image.id)
+                    self.logger.info('* deleted image: %s (%s)', name, image.id)
+                    for snapshot in delete_snapshots:
+                        snapshot.delete(DryRun=self.options.dry_run)
+                        self.logger.info('  * deleted snapshot: %s', snapshot.id)
+
                 except boto3.exceptions.botocore.exceptions.ClientError as e:
                     self.logger.error(e)
