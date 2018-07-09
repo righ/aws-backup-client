@@ -1,3 +1,4 @@
+
 Installation
 ============
 
@@ -7,7 +8,7 @@ Installation
 
 Example
 =======
-Currently, we use the following:
+Currently, we can use the following functions:
 
 
 EC2 AMI Image
@@ -16,37 +17,40 @@ EC2 AMI Image
 .. code-block:: sh
 
   $ ec2-ami-backup --instance-id=i-xxxxxxxx --instance-id=i-yyyyyyyy \
-  >               --instance-name=name1 --instance-name=*name2*\
-  >               --instance-tag=key/value --instance-tag=key2/*value2* \
-  >               --image-description='weekly backup image' \
-  >               --image-max-number=2 \
-  >               --image-expiration='14days' \
-  >               --aws-access-key-id=AKIXXXXXXXXXXXXXXXX \
-  >               --aws-secret-access-key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
-  >               --aws-region=ap-northeast-1 \
-  >               --aws-time-diff='9hours' \
-  >               --client-time-diff='9hours' \
-  >               --client-time-format='%Y-%m-%dT%H-%M-%S' \
-  >               --log-level=10 \
-  >               --reboot \
-  >               --prefix='weekly-' \
-  >               --dry-run
-  >               --keep-snapshot
+  >                --instance-name=name1 --instance-name=*name2*\
+  >                --instance-tag=key/value --instance-tag=key2/*value2* \
+  >                --image-description='weekly backup image' \
+  >                --image-max-number=2 \
+  >                --image-expiration='14days' \
+  >                --aws-access-key-id=AKIXXXXXXXXXXXXXXXX \
+  >                --aws-secret-access-key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
+  >                --aws-region=ap-northeast-1 \
+  >                --aws-time-diff='9hours' \
+  >                --client-time-diff='9hours' \
+  >                --client-time-format='%Y-%m-%dT%H-%M-%S' \
+  >                --log-level=10 \
+  >                --reboot \
+  >                --prefix='weekly-' \
+  >                --dry-run \
+  >                --keep-snapshot
 
-Following least any one input is required:
+At least any one of the following inputs is required:
 
 * --instance-id
 * --instance-name
 * --instance-tag
 
-
 .. warning:: 
+  
+  * v0.0.7
+
+    * improved codes.
+
+  * v0.0.6
+
+    * --keep-snapshot: It does not remove the snapshot that related to ami.
 
   * v0.0.4
 
     * it has limited input as described above.
     * renamed command `ec2ami-backup` to `ec2-ami-backup`.
-
-  * v0.0.6
-
-    * --keep-snapshot: It does not remove the snapshot that related to ami.

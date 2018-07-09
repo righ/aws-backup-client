@@ -70,18 +70,6 @@ class TestEc2Client(TestCase):
             DryRun=True
         )
 
-    @mock.patch('aws_backup.client.base.boto3')
-    def test_delete_image_not_called(self, dummy_boto):
-        cli = self._makeOne(
-            log_level=10,
-            image_max_number=None,
-            image_expiration=None,
-            preload=None,
-        )
-        instance = mock.MagicMock(id='testid')
-        cli.delete_images(instance)
-        self.assertFalse(cli.resource.images.filter.called)
-
     @mock.patch('aws_backup.client.base.datetime')
     @mock.patch('aws_backup.client.base.boto3')
     def test_delete_image_exceeded_number(self, dummy_boto, dummy_datetime):
@@ -143,8 +131,8 @@ class TestEc2Client(TestCase):
 
     @mock.patch('aws_backup.client.base.boto3')
     def test_raise_option_does_not_enough(self, dummy_boto):
-        from ..exceptions import OptionDoesNotEnough
-        with self.assertRaises(OptionDoesNotEnough):
+        from ..exceptions import OptionIsNotEnough
+        with self.assertRaises(OptionIsNotEnough):
             self._makeOne(
                 log_level=30,
                 preload=None,

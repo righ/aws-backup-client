@@ -5,5 +5,5 @@ class AwsBackupException(BaseException):
     pass
 
 
-class OptionDoesNotEnough(AwsBackupException):
+class OptionIsNotEnough(AwsBackupException):
     pass

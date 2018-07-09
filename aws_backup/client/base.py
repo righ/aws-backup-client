@@ -1,4 +1,5 @@
 # coding: utf-8
+import operator
 import logging
 from datetime import datetime
 
@@ -10,6 +11,7 @@ AWS_TIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 class BaseClient(object):
     resource_service = None
     client_service = None
+    delete_condition = {}
 
     def __init__(self, logger, options):
         logger.setLevel(options.log_level)
@@ -49,16 +51,29 @@ class BaseClient(object):
             return cdate + self.options.aws_time_diff
         return cdate
 
+    def is_delete(self, condition):
+        if not self.delete_condition:
+            return False
+
+        for key, method in self.delete_condition.items():
+            option = getattr(self.options, key, None)
+            comparison = getattr(operator, method)
+            if option is not None and not comparison(option, condition[key]):
+                return False
+        return True
+
     def generate_query(self, id):
         return '{prefix}{id}-*'.format(prefix=self.options.prefix, id=id)
 
     def generate_code(self, id):
         return '{prefix}{id}-{time}'.format(
-            prefix=self.options.prefix, id=id,
+            id=id,
+            prefix=self.options.prefix,
             time=self.now.strftime(self.options.client_time_format)
         )
 
     def extract_name(self, tags):
         return {
             t['Key']: t['Value']
-            for t in tags or []}.get('Name', 'noname')
+            for t in tags or []
+        }.get('Name', 'noname')
